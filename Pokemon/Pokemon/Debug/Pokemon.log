@@ -1,0 +1,26 @@
+﻿  BattleArena.cpp
+c:\users\bmahabir\desktop\pokemon\battlearena.cpp(8): error C2059: syntax error: '}'
+  Building.cpp
+  GameCommand.cpp
+  GameObject.cpp
+  main.cpp
+c:\users\bmahabir\desktop\pokemon\main.cpp(9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Model.cpp
+  Point2D.cpp
+  Pokemon.cpp
+  PokemonCenter.cpp
+  PokemonGym.cpp
+  Rival.cpp
+  TestCheckpoint1.cpp
+  TestCheckPoint2.cpp
+  Testcheckpoint2cpp.cpp
+  Testcheckpoint3.cpp
+  testview.cpp
+  Vector2D.cpp
+  View.cpp
+c:\users\bmahabir\desktop\pokemon\view.cpp(33): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\bmahabir\desktop\pokemon\view.cpp(34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+c:\users\bmahabir\desktop\pokemon\rival.cpp(77): error C4716: 'Rival::Update': must return a value
+c:\users\bmahabir\desktop\pokemon\pokemoncenter.cpp(97): warning C4715: 'PokemonCenter::Update': not all control paths return a value
+c:\users\bmahabir\desktop\pokemon\model.cpp(112): warning C4715: 'Model::Update': not all control paths return a value
