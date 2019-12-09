@@ -7,7 +7,7 @@ enum BattleArenaStates {
 };
 
 
-class BattleArena : Building
+class BattleArena : public Building
 {
 public:
 	

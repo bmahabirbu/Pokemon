@@ -4,7 +4,7 @@
 
 BattleArena::BattleArena()
 {
-	max_num_rivals = 
+	//max_num_rivals = 
 }
 
 BattleArena::BattleArena(unsigned int max_rivals, unsigned int stamina_cost, double dollar_cost, int

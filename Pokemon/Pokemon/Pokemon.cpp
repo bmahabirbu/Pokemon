@@ -503,21 +503,56 @@ bool Pokemon::IsAlive()
 
 void Pokemon::TakeHit(double physical_damage, double magical_damage, double defense)
 {
-	
+	double attack;
+	int phy_or_mag = rand() % 2 + 1;
+	if (phy_or_mag == 1)
+	{
+		attack = physical_damage;
+	}
+	else
+	{
+		attack = magical_damage;
+	}
+
+	health -= (100.0 - defense) / 100 * attack;
 }
 
 void Pokemon::ReadyBattle(Rival * in_target)
 {
+	if (state == IN_ARENA && current_arena->IsAbleToFight(pokemon_dollars, stamina) == true && current_arena->IsBeaten() == false)
+	{
+		target = in_target;
+		state = BATTLE;
+	}
 }
 
 bool Pokemon::StartBattle()
 {
-	
+	if (state == BATTLE)
+	{
+		TakeHit(target->get_phys_dmg(), target->get_phys_dmg(), defense);
+		cout << name << " took damage" << endl;
+	}
 }
 
 void Pokemon::StartMovingToArena(BattleArena * arena)
 {
-	
+	if (location.x == arena->GetLocation().x && location.y == arena->GetLocation().y)
+	{
+		cout << display_code << id_num << ": I'm already at the Battle Arena!" << endl;
+	}
+	else if (stamina == 0)
+	{
+		cout << display_code << id_num << ": I am exhausted so I cant battle" << endl;
+		state = EXHAUSTED;
+	}
+	else
+	{
+		cout << display_code << id_num << " On my way to the Battle Arena" << endl;
+		state = MOVING_TO_ARENA;
+		SetupDestination(arena->GetLocation());
+		current_arena = arena; //sets the pokemon center location to the pokemons center destination pointer
+	}
 }
 
 double GetRandomAmountOfPokemonDollars()

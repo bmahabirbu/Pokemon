@@ -1,1 +1,5 @@
-﻿  Pokemon.vcxproj -> C:\Users\bmahabir\source\repos\bmahabirbu\Pokemon\Pokemon\Pokemon\x64\Debug\Pokemon.exe
+﻿  BattleArena.cpp
+  Pokemon.cpp
+  Generating Code...
+c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\pokemon.cpp(490): warning C4715: 'Pokemon::Update': not all control paths return a value
+  Pokemon.vcxproj -> C:\Users\bmahabir\source\repos\bmahabirbu\Pokemon\Pokemon\Pokemon\x64\Debug\Pokemon.exe
