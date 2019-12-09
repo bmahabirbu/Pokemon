@@ -1,6 +1,22 @@
 ﻿  BattleArena.cpp
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\battlearena.cpp(8): error C2059: syntax error: '}'
+c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\battlearena.cpp(8): error C2059: syntax error: '}'
+  Building.cpp
+  GameCommand.cpp
+  GameObject.cpp
   main.cpp
+  Model.cpp
+  Point2D.cpp
+  Pokemon.cpp
+  PokemonCenter.cpp
+  PokemonGym.cpp
   Rival.cpp
+  TestCheckpoint1.cpp
+  TestCheckPoint2.cpp
+  Testcheckpoint3.cpp
+  testview.cpp
+  Vector2D.cpp
+  View.cpp
   Generating Code...
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\rival.cpp(77): error C4716: 'Rival::Update': must return a value
+c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\rival.cpp(77): error C4716: 'Rival::Update': must return a value
+c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\pokemoncenter.cpp(97): warning C4715: 'PokemonCenter::Update': not all control paths return a value
+c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(112): warning C4715: 'Model::Update': not all control paths return a value

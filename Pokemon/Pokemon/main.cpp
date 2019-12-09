@@ -6,7 +6,7 @@
 
 int main(void)
 {
-	srand(time(NULL)); //eat pop
+	srand(time(NULL)); //git test
 	Model model;
 	View view;
 	model.Display(view);
