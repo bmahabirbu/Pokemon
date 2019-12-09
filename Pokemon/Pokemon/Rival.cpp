@@ -11,13 +11,13 @@ Rival::Rival()
 	magical_damage = 4;
 	defense = 15;
 	is_in_arena = true;
-	//current_arena = 
+	//current arena
 }
 
 Rival::Rival(string name, double speed, double hp, double phys_dmg, double
 	magic_dmg, double def, int id, Point2D in_loc) : GameObject(in_loc, id, 'R')
 {
-	//tag = name;
+	tag = name;
 	agility = speed;
 	health = hp;
 	physical_damage = phys_dmg;
@@ -68,11 +68,13 @@ bool Rival::Update()
 	{
 		state = ALIVE_RIVAL;
 		ShowStatus();
+		return false;
 	}
 	else
 	{
 		state = FAINTED_RIVAL;
 		ShowStatus();
+		return true;
 	}
 }
 
@@ -83,13 +85,13 @@ void Rival::ShowStatus()
 	{
 	case ALIVE_RIVAL:
 		{
-		cout << "Rival " << namu << " is alive and well" << endl;
+		cout << "Rival " << get_name() << " is alive and well" << endl;
 		}
 		break;
 		
 	case FAINTED_RIVAL:
 		{
-		cout << "Rival " << namu << " has fainted" << endl;
+		cout << "Rival " << get_name() << " has fainted" << endl;
 		}
 		break;
 

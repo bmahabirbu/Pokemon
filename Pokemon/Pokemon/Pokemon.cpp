@@ -461,10 +461,63 @@ bool Pokemon::Update()
 
 		break;
 
+		
+	case MOVING_TO_ARENA:
+		{
+		ShowStatus();
+		if (UpdateLocation() == true)
+		{
+			state = IN_ARENA;
+			is_in_arena = true;
+			return true;
+		}
+		else return false;
+		}
+		break;
+
+	case BATTLE:
+		{
+			ShowStatus();
+			
+		}
+		break;
+
+		
 	default:
 		cout << "something went wrong with the state machine" << endl;
 		return false;
 	}
+}
+
+bool Pokemon::IsAlive()
+{
+	if(state != FAINTED)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
+}
+
+void Pokemon::TakeHit(double physical_damage, double magical_damage, double defense)
+{
+	
+}
+
+void Pokemon::ReadyBattle(Rival * in_target)
+{
+}
+
+bool Pokemon::StartBattle()
+{
+	
+}
+
+void Pokemon::StartMovingToArena(BattleArena * arena)
+{
+	
 }
 
 double GetRandomAmountOfPokemonDollars()

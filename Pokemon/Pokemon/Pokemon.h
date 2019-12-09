@@ -68,6 +68,8 @@ public:
 	void ReadyBattle(Rival *in_target);
 
 	bool StartBattle();
+
+	void StartMovingToArena(BattleArena* arena);
 	
 
 protected:

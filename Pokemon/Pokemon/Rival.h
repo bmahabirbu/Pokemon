@@ -30,8 +30,6 @@ public:
 	double get_defense();
 
 	string get_name();
-
-	string namu;
 	
 	double get_health();
 
@@ -39,7 +37,7 @@ public:
 
 	void ShowStatus();
 
-	bool IsAlive();
+	bool IsAlive(); //sees if rival is alive
 	
 	
 protected:
