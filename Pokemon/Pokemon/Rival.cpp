@@ -1,4 +1,5 @@
 #include "Rival.h"
+#include "BattleArena.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,7 +12,7 @@ Rival::Rival()
 	magical_damage = 4;
 	defense = 15;
 	is_in_arena = true;
-	//current arena
+	//current_arena = &arena;
 	cout << "Rival default constructed" << endl;
 }
 
@@ -25,6 +26,7 @@ Rival::Rival(string name, double speed, double hp, double phys_dmg, double
 	magical_damage = magic_dmg;
 	defense = def;
 	is_in_arena = true;
+	//current_arena = &arena
 
 //not sure if to define this or not
 	//id_num = id;
@@ -123,5 +125,6 @@ bool Rival::IsAlive()
 		return false;
 	}
 }
+
 
 

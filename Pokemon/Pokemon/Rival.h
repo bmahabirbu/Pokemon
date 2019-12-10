@@ -39,7 +39,6 @@ public:
 
 	bool IsAlive(); //sees if rival is alive
 	
-	
 protected:
 
 	double health;

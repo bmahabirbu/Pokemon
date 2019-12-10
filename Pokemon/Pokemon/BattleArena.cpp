@@ -95,3 +95,11 @@ void BattleArena::ShowStatus()
 	cout << num_rivals_remaining << " rival(s) are remaining for this arena" << endl;
 
 }
+
+void BattleArena::RemoveOnePokemon(Rival* rival)
+{
+	if (rival->IsAlive() == true)
+	{
+		num_rivals_remaining -= 1;
+	}
+}
