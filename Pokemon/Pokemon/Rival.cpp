@@ -12,6 +12,7 @@ Rival::Rival()
 	defense = 15;
 	is_in_arena = true;
 	//current arena
+	cout << "Rival default constructed" << endl;
 }
 
 Rival::Rival(string name, double speed, double hp, double phys_dmg, double
@@ -29,12 +30,23 @@ Rival::Rival(string name, double speed, double hp, double phys_dmg, double
 	//id_num = id;
 	//location = in_loc;
 	//display_code = 'R';
-	
+	cout << "Rival constructed" << endl;
 }
 
 void Rival::TakeHit(double physical_damage, double magical_damage, double defense) //same as pokemon class
 {
-	
+	double attack;
+	int phy_or_mag = rand() % 2 + 1;
+	if (phy_or_mag == 1)
+	{
+		attack = physical_damage;
+	}
+	else
+	{
+		attack = magical_damage;
+	}
+
+	health -= (100.0 - defense) / 100 * attack;
 }
 
 double Rival::get_phys_dmg()

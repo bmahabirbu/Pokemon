@@ -53,9 +53,18 @@ Pokemon::Pokemon(string in_name, int in_id, char in_code, unsigned int in_speed,
 	display_code = in_code;
 	location = in_loc;
 	state = STOPPED;
-	cout << "Pokemon contructed" << endl;
+	cout << "Pokemon constructed" << endl;
 	destination = Point2D(0.0, 0.0);
+	//update constructor
+	health = 20;
+	store_health = health;
+	physical_damage = 5;
+	magical_damage = 4;
+	defense = 15;
+	is_in_arena = false;
 }
+
+
 
 void Pokemon::ShowStatus()
 {
@@ -90,11 +99,15 @@ void Pokemon::ShowStatus()
 
 	case IN_GYM: cout << "\t inside Pokemon Gym " << current_gym->GetId() << endl;
 		break;
+	
+	case IN_ARENA: cout << "\t inside Battle Arena " << current_arena->GetId() << endl;
 
 	case TRAINING_IN_GYM: cout << "\t Training in Pokemon Gym " << current_gym->GetId() << endl;
 		break;
 
 	case RECOVERING_STAMINA: cout << "\t recovering stamina in Pokemon Center " << current_center->GetId() << endl;
+		break;
+	case BATTLE: cout << "\t In Battle with Rival" << endl;
 		break;
 	default:
 		cout << "\t something went wrong with the state" << endl;
@@ -294,7 +307,7 @@ void Pokemon::StartRecoveringStamina(unsigned int num_stamina_points)
 
 	if (current_center == NULL) //checks to see if there is a current center pointer
 	{
-		cout << "You havent selected to start moving to a Pokemon center yet" << endl;
+		cout << "You haven't selected to start moving to a Pokemon center yet" << endl;
 		error = true;
 	}
 	
@@ -478,7 +491,19 @@ bool Pokemon::Update()
 	case BATTLE:
 		{
 			ShowStatus();
-			
+			stamina -= current_arena->GetStaminaCost();
+			pokemon_dollars -= current_arena->GetDollarCost();
+			if (StartBattle() == true)
+			{
+				health = store_health;
+				state = IN_ARENA;
+				target->IsAlive();
+			}
+			else
+			{
+				state = FAINTED;
+				target->IsAlive();
+			}
 		}
 		break;
 
@@ -524,14 +549,33 @@ void Pokemon::ReadyBattle(Rival * in_target)
 		target = in_target;
 		state = BATTLE;
 	}
+	else
+	{
+		cout << "You are not ready to fight" << endl;
+	}
 }
 
 bool Pokemon::StartBattle()
 {
 	if (state == BATTLE)
 	{
-		TakeHit(target->get_phys_dmg(), target->get_phys_dmg(), defense);
-		cout << name << " took damage" << endl;
+		while (health > 0 || target->get_health() > 0)
+		{
+			TakeHit(target->get_phys_dmg(), target->get_phys_dmg(), defense);
+			cout << name << " took damage" << endl;
+			target->TakeHit(physical_damage, magical_damage, target->get_defense());
+			cout << "Rival took damage" << endl;
+		}
+		if (health == 0)
+		{
+			cout << name << " Lost the battle" << endl;
+			return false;
+		}
+		if (target->get_health() == 0)
+		{
+			cout << "Rival lost the battle" << endl;
+			return true;
+		}
 	}
 }
 
