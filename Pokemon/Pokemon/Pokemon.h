@@ -9,8 +9,8 @@
 
 enum PokemonStates {
 	STOPPED = 0,
-	MOVING = 1,
-	EXHAUSTED = 2,
+	EXHAUSTED = 1,
+	MOVING = 2,
 	IN_GYM = 3,
 	IN_CENTER = 4,
 	MOVING_TO_GYM = 5,

@@ -46,7 +46,8 @@ Pokemon::Pokemon(char in_code)
 	destination = Point2D(0.0, 0.0);
 }
 
-Pokemon::Pokemon(string in_name, int in_id, char in_code, unsigned int in_speed, Point2D in_loc)
+Pokemon::Pokemon(string in_name, int in_id, 
+	char in_code, unsigned int in_speed, Point2D in_loc) : GameObject(in_loc,in_id,in_code)
 {
 	stamina = 20;
 	is_in_gym = false;
@@ -439,7 +440,7 @@ bool Pokemon::Update()
 		is_in_arena = false;
 		is_in_gym = false;
 		ShowStatus();
-		return false;
+		return true;
 	}
 
 	case MOVING:
@@ -452,6 +453,7 @@ bool Pokemon::Update()
 		{
 			state = STOPPED;
 			return true;
+			//return false;
 		}
 		else return false;
 	}
@@ -486,6 +488,7 @@ bool Pokemon::Update()
 			current_gym->AddOnePokemon();//fixed pa3
 			is_in_gym = true;
 			return true;
+			//return false;
 		}
 		else
 		{
@@ -571,6 +574,7 @@ bool Pokemon::Update()
 				state = IN_ARENA;
 				target->IsAlive();
 				cout << name << " Won the battle" << endl;
+				current_arena->RemoveOneRival(); // remove one rival only once
 				return true;
 				
 			}
@@ -615,19 +619,22 @@ bool Pokemon::IsAlive()
 void Pokemon::TakeHit(double physical_damage, double magical_damage, double defense)
 {
 	double attack;
+	
 	int phy_or_mag = rand() % 2 + 1;
+	
 	if (phy_or_mag == 1)
 	{
 		attack = physical_damage;
-		cout << "took physical attack" << endl;
+		cout << name << " took " << attack << " physical attack" << endl;
 	}
 	else
 	{
 		attack = magical_damage;
-		cout << "took Magical attack" << endl;
+		cout << name << " took " << attack << " Magical attack" << endl;
 	}
 
 	health -= (100.0 - defense) / 100 * attack;
+	cout << name << " took " << (100.0 - defense) / 100 * attack << " damage" << endl;
 }
 
 void Pokemon::ReadyBattle(Rival * in_target)
@@ -652,22 +659,20 @@ bool Pokemon::StartBattle()
 	{
 		while (health > 0 && target->get_health() > 0)
 		{
-			TakeHit(target->get_phys_dmg(), target->get_phys_dmg(), defense);
-			cout << name << " took damage" << endl;
+			TakeHit(target->get_phys_dmg(), target->get_magic_dmg(), defense);
 			target->TakeHit(physical_damage, magical_damage, target->get_defense());
-			cout << "Rival took damage" << endl;
-		}
-		
-		if (health <= 0 && target->get_health() >= 0)
-		{
-			//cout << name << " Lost the battle" << endl;
-			return false;
-		}
-		if (target->get_health() <= 0 && health >= 0)
-		{
-			//cout << "Rival lost the battle" << endl;
-			return true;
-		}
+			if (health <= 0 && target->get_health() >= 0)
+			{
+				//cout << name << " Lost the battle" << endl;
+				return false;
+			}
+			if (health >= 0  && target->get_health() <= 0)
+			{
+				//cout << "Rival lost the battle" << endl;
+				return true;
+			}
+		}	
+	
 	}
 }
 

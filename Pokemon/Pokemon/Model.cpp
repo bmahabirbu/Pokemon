@@ -157,10 +157,23 @@ bool Model::Update()
 	cout << "time " << time << endl;
 	for (auto it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
 	{
+		(*it)->Update();
 		
-		if ((*it)->Update() == true) //iterate and update, also check if update is true	//and return true
+		if ((*it)->GetState() == 1 || (*it)->GetState() == 12) //iterate and update, also check if update is true	//and return true
 		{
-			return true;
+
+			if ((--it) == active_ptrs.end())
+			{
+				//active_ptrs.pop_back();
+				//cout << "yay" << endl;
+				break;
+			}
+			
+			it = active_ptrs.erase(it);
+			
+			
+				
+			cout << "removed dead object" << endl;
 		}
 		
 	
@@ -214,7 +227,7 @@ void Model::Display(View &view)
 {
 	view.Clear();
 
-	for (auto it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
+	for (auto it = object_ptrs.begin(); it != object_ptrs.end(); ++it)
 	{
 		if ((*it)->ShouldBeVisible() == false)
 		{
@@ -230,7 +243,7 @@ void Model::Display(View &view)
 
 void Model::ShowStatus()
 {
-	for (auto it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
+	for (auto it = object_ptrs.begin(); it != object_ptrs.end(); ++it)
 	{
 		(*it)->ShowStatus();
 	}

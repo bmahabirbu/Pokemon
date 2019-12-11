@@ -9,12 +9,15 @@ Building::Building()
 	cout << "Building default contructed" << endl;
 }
 
-Building::Building(char in_code, int in_Id, Point2D in_loc) //sets idnum displaycode and location
+Building::Building(char in_code, int in_Id, Point2D in_loc)
+: GameObject(in_loc,in_Id,in_code)
+//sets idnum displaycode and location
 {
 	pokemon_count = 0;
 	id_num = in_Id;
 	display_code = in_code;
 	location = in_loc;
+	cout << "Building  contructed" << endl;
 }
 
 void Building::AddOnePokemon()

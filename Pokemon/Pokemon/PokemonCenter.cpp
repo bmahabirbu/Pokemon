@@ -16,7 +16,8 @@ PokemonCenter::~PokemonCenter()
 	cout << "PokemonCenter destructed" << endl;
 }
 
-PokemonCenter::PokemonCenter(int in_id, double stamina_cost, unsigned int stamina_cap, Point2D in_loc)
+PokemonCenter::PokemonCenter(int in_id, double stamina_cost, 
+	unsigned int stamina_cap, Point2D in_loc) : Building('C',in_id,in_loc)
 {
 	id_num = in_id;
 	dollar_cost_per_stamina_point = stamina_cost;

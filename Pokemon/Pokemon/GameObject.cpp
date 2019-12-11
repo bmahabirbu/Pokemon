@@ -14,7 +14,7 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	cout << "GameObject destructed" << endl;
+	//cout << "GameObject destructed" << endl;
 }
 
 GameObject::GameObject(char in_code)

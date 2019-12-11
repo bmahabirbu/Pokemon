@@ -19,7 +19,7 @@ PokemonGym::~PokemonGym()
 }
 
 PokemonGym::PokemonGym(unsigned int max_training_units, unsigned int stamina_cost, double dollar_cost,
-	unsigned int exp_points_per_unit, int in_id, Point2D in_loc)
+	unsigned int exp_points_per_unit, int in_id, Point2D in_loc) : Building('G', in_id, in_loc)
 {
 	state = NOT_BEATEN;
 	display_code = 'G';

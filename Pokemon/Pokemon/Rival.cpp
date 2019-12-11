@@ -12,6 +12,7 @@ Rival::Rival(BattleArena arena)
 	defense = 15;
 	agility = 5;
 	is_in_arena = true;
+	state = ALIVE_RIVAL;
 	current_arena = &arena;
 	cout << "Rival default constructed" << endl;
 }
@@ -26,6 +27,7 @@ Rival::Rival(BattleArena arena, string name, double speed, double hp, double phy
 	magical_damage = magic_dmg;
 	defense = def;
 	is_in_arena = true;
+	state = ALIVE_RIVAL;
 	current_arena = &arena;
 	cout << "Rival constructed" << endl;
 }
@@ -33,19 +35,22 @@ Rival::Rival(BattleArena arena, string name, double speed, double hp, double phy
 void Rival::TakeHit(double physical_damage, double magical_damage, double defense) //same as pokemon class
 {
 	double attack;
+	
 	int phy_or_mag = rand() % 2 + 1;
+	
 	if (phy_or_mag == 1)
 	{
 		attack = physical_damage;
-		cout << "Rival took physical attack" << endl;
+		cout << "Rival " << tag << " took " << attack << " physical attack" << endl;
 	}
 	else
 	{
 		attack = magical_damage;
-		cout << "Rival took magical attack" << endl;
+		cout << "Rival " << tag << " took " << attack << " magical attack" << endl;
 	}
 
 	health -= (100.0 - defense) / 100 * attack;
+	cout << tag << " took " << (100.0 - defense) / 100 * attack << " damage" << endl;
 }
 
 double Rival::get_phys_dmg()
@@ -75,24 +80,23 @@ double Rival::get_health()
 
 bool Rival::Update()
 {
-	if (IsAlive() == true)
+	if (IsAlive() == false && display_code == 'R')
 	{
-		state = ALIVE_RIVAL;
 		ShowStatus();
-		return false;
+		display_code = 'r';
+		return true;
 	}
 	else
 	{
-		state = FAINTED_RIVAL;
-		current_arena->RemoveOneRival();
 		ShowStatus();
-		return true;
+		return false;
 	}
 }
 
 void Rival::ShowStatus()
 {
 	cout << "Rival status..." << endl;
+	GameObject::ShowStatus();
 	switch (state)
 	{
 	case ALIVE_RIVAL:
@@ -126,10 +130,12 @@ bool Rival::IsAlive()
 {
 	if (health > 0)
 	{
+		state = ALIVE_RIVAL;
 		return true;
 	}
 	else
 	{
+		state = FAINTED_RIVAL;
 		return false;
 	}
 }
