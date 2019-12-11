@@ -1,8 +1,8 @@
 #pragma once
-
+#include "Point2D.h"
 #include "GameObject.h"
 #include "BattleArena.h"
-#include <string>
+#include  <string>
 
 enum RivalStates //create states for rival
 {
@@ -10,14 +10,14 @@ enum RivalStates //create states for rival
 	FAINTED_RIVAL = 1
 };
 
-class Rival : GameObject
+class Rival : public GameObject
 {
+	
 public:
 
-	Rival();
+	Rival(BattleArena arena);
 	
-	Rival(string name, double speed, double hp, double phys_dmg, double
-		magic_dmg, double def, int id, Point2D in_loc);
+	Rival(BattleArena arena, string name, double speed, double hp, double phys_dmg, double magic_dmg, double def, int id, Point2D in_loc);
 
 	//functions
 
@@ -37,7 +37,10 @@ public:
 
 	void ShowStatus();
 
+	bool ShouldBeVisible();
+
 	bool IsAlive(); //sees if rival is alive
+
 	
 protected:
 
@@ -53,9 +56,6 @@ protected:
 	double defense;
 	//It will parry percentage of the attack that Rival received.
 
-	double stamina_cost_per_fight;
-	//per fight cost in stamina
-
 	bool is_in_arena;
 	//Returns true if the rival inside the arena
 
@@ -66,5 +66,4 @@ protected:
 
 	double agility;
 
-	
 };

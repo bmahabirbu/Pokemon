@@ -133,4 +133,52 @@ void DoRunCommand(Model & model, View & view)
 	model.Display(view);
 }
 
+void DoMoveToArenaCommand(Model & model, int pokemon_id, int arena_id)
+{
+	while (pokemon_id <= 0 || pokemon_id > 2)
+	{
+		cout << "Error: please enter a valid pokemon id!" << endl;
+		cin >> pokemon_id;
+
+	}
+
+	Pokemon* Poke1 = model.GetPokemonPtr(pokemon_id);
+
+	while (arena_id <= 0 || arena_id > 2)
+	{
+		cout << "Error: please enter a valid arena id!" << endl;
+		cin >> arena_id;
+
+	}
+
+	BattleArena* battlearena1 = model.GetBattleArenaPtr(arena_id);//for readability set pointer to a name
+
+	cout << " Moving " << Poke1->GetName() << " to arena " << battlearena1->GetId() << endl;
+	Poke1->StartMovingToArena(battlearena1); //start moving
+}
+
+void DoBattleCommand(Model & model, int pokemon_id, int rival_id)
+{
+	while (pokemon_id <= 0 || pokemon_id > 2)
+	{
+		cout << "Error: please enter a valid pokemon id!" << endl;
+		cin >> pokemon_id;
+
+	}
+
+	Pokemon* Poke1 = model.GetPokemonPtr(pokemon_id);
+
+	while (rival_id <= 0 || rival_id > 3)
+	{
+		cout << "Error: please enter a valid rival id!" << endl;
+		cin >> pokemon_id;
+
+	}
+
+	Rival* opponent = model.GetRivalPtr(rival_id);
+	
+	Poke1->ReadyBattle(opponent);
+
+}
+
 

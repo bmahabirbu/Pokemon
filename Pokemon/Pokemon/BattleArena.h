@@ -1,6 +1,7 @@
 #pragma once
 #include "Building.h"
-#include "Rival.h"
+#include "GameObject.h"
+#include  "Point2D.h"
 
 enum BattleArenaStates {
 	RIVALS_AVAILABLE = 0,
@@ -45,7 +46,7 @@ public:
 
 	void ShowStatus();
 
-	void RemoveOnePokemon(Rival* rival);
+	void RemoveOneRival();
 	
 
 	

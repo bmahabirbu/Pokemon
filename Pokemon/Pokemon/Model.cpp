@@ -2,19 +2,32 @@
 #include  "Rival.h"
 #include  "BattleArena.h"
 #include <stdlib.h>
+#include <list> 
+#include <iterator>
 
 Model::Model()
 {
-	time = 0;
+	time = -1;
 	Pokemon* Pokemon1 = new Pokemon("Pikachu", 1, 'P', 2, Point2D(5, 1));
 	Pokemon* Pokemon2 = new Pokemon("Bulbasaur", 2, 'P', 1, Point2D(10, 1));
 	PokemonCenter* PokemonCenter_1 = new PokemonCenter(1, 1, 100, Point2D(1, 20));
 	PokemonCenter* PokemonCenter_2 = new PokemonCenter(2, 2, 200, Point2D(10, 20));
 	PokemonGym* PokemonGym_1 = new PokemonGym(10, 1, 2, 3, 1, Point2D(0,0));
 	PokemonGym* PokemonGym_2 = new PokemonGym(20, 5, 7.5, 8, 2, Point2D(5, 5));
+	//new objects rival and battlearena
+	BattleArena* battle_arena = new BattleArena(5, 3, 4, 1, Point2D(15, 12));
+
+	Rival* Rival1 = new Rival(*battle_arena,"Bubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
+	Rival* Rival2 = new Rival(*battle_arena,"kubba", 5, 10, 5, 4, 15, 1, Point2D(15, 12));
+	Rival* Rival3 = new Rival(*battle_arena,"rubba", 5, 10, 5, 4, 15, 1, Point2D(15, 12));
 
 	//add rival and Battle arena
 
+	battle_arena_ptrs[0] = battle_arena;
+
+	rival_ptrs[0] = Rival1;
+	rival_ptrs[1] = Rival2;
+	rival_ptrs[2] = Rival3;
 	
 	pokemon_ptrs[0] = Pokemon1; //sets Pointers to the array accordingly
 	pokemon_ptrs[1] = Pokemon2;
@@ -31,11 +44,17 @@ Model::Model()
 	object_ptrs[3] = PokemonCenter_2;
 	object_ptrs[4] = PokemonGym_1;
 	object_ptrs[5] = PokemonGym_2;
+	object_ptrs[6] = battle_arena;
+	object_ptrs[7] = Rival1;
+	object_ptrs[8] = Rival2;
+	object_ptrs[9] = Rival3;
 
-	num_objects = 6;
+	num_objects = 10;
 	num_pokemon = 2;
 	num_centers = 2;
 	num_gym = 2;
+	num_rivals = 3;
+	num_arenas = 1;
 
 	cout << "Model default contructed" << endl;
 
@@ -51,6 +70,24 @@ Model::~Model()
 	cout << "Model destructed" << endl;
 }
 
+BattleArena* Model::GetBattleArenaPtr(int id)
+{
+	for (int i = 0; i < num_arenas; i++)
+	{
+		if (battle_arena_ptrs[i]->GetId() == id)
+			return battle_arena_ptrs[i];
+	}
+}
+
+Rival* Model::GetRivalPtr(int id)
+{
+	for (int i = 0; i < num_rivals; i++)
+	{
+		if (rival_ptrs[i]->GetId() == id)
+			return rival_ptrs[i];
+	}
+}
+
 Pokemon* Model::GetPokemonPtr(int id)
 {
 	for (int i = 0; i < num_pokemon; i++)
@@ -58,7 +95,6 @@ Pokemon* Model::GetPokemonPtr(int id)
 		if (pokemon_ptrs[i]->GetId() == id)
 			return pokemon_ptrs[i];
 	}
-	return 0;
 }
 
 PokemonCenter* Model::GetPokemonCenterPtr(int id)
@@ -68,8 +104,6 @@ PokemonCenter* Model::GetPokemonCenterPtr(int id)
 		if (centers_ptrs[i]->GetId() == id)
 			return centers_ptrs[i];
 	}
-	return 0;
-	return nullptr;
 }
 
 PokemonGym* Model::GetPokemonGymPtr(int id)
@@ -79,7 +113,6 @@ PokemonGym* Model::GetPokemonGymPtr(int id)
 		if (gym_ptrs[i]->GetId() == id)
 			return gym_ptrs[i];
 	}
-	return 0;
 }
 
 bool Model::Update()
@@ -96,7 +129,15 @@ bool Model::Update()
 		}
 	
 	}
-
+	
+	for (int i = 0; i < num_rivals; i++)
+	{
+		if (rival_ptrs[i]->IsAlive() == true)
+		{
+			battle_arena_ptrs[0]->RemoveOneRival();
+		}
+	}
+	
 	if (gym_ptrs[0]->IsBeaten() == true && gym_ptrs[1]->IsBeaten() == true)
 	{
 		cout << "You win! All Pokemon Gyms have been beatened!" << endl;
@@ -136,3 +177,5 @@ void Model::ShowStatus()
 		object_ptrs[i]->ShowStatus();
 	}
 }
+
+

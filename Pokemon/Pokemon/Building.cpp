@@ -11,6 +11,7 @@ Building::Building()
 
 Building::Building(char in_code, int in_Id, Point2D in_loc) //sets idnum displaycode and location
 {
+	pokemon_count = 0;
 	id_num = in_Id;
 	display_code = in_code;
 	location = in_loc;
@@ -23,7 +24,11 @@ void Building::AddOnePokemon()
 
 void Building::RemoveOnePokemon()
 {
-	pokemon_count--;//decrease pokemon count
+	if(pokemon_count > 0)
+	{
+		pokemon_count--;//decrease pokemon count
+	}
+	
 }
 
 void Building::ShowStatus()

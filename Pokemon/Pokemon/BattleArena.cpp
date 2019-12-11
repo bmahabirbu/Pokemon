@@ -1,8 +1,11 @@
 #include "BattleArena.h"
+#include "Point2D.h"
+#include  "GameObject.h"
+#include  "Building.h"
 
 
 
-BattleArena::BattleArena()
+BattleArena::BattleArena() 
 {
 	display_code = 'A';
 	pokemon_count = 0;
@@ -19,8 +22,10 @@ BattleArena::BattleArena(unsigned int max_rivals, unsigned int stamina_cost, dou
 {
 
 	id_num = in_id;
+	pokemon_count = 0;
 	location = in_loc;
 	max_num_rivals = max_rivals;
+	num_rivals_remaining = max_rivals;
 	stamina_cost_per_fight = stamina_cost;
 	dollar_cost_per_fight = dollar_cost;
 	state = RIVALS_AVAILABLE;
@@ -88,14 +93,23 @@ bool BattleArena::IsBeaten()
 
 void BattleArena::ShowStatus()
 {
+	cout << "Pokemon Arena Status " << display_code << id_num << " located at " << location;
 	Building::ShowStatus();
-	cout << "Max number of rivals: " << max_num_rivals << endl;
-	cout << "Stamina cost per fight: " << stamina_cost_per_fight << endl;
-	cout << "Pokemon dollar cost per fight: " << dollar_cost_per_fight << endl;
-	cout << num_rivals_remaining << " rival(s) are remaining for this arena" << endl;
+	cout << "\t Max number of rivals: " << max_num_rivals << endl;
+	cout << "\t Stamina cost per fight: " << stamina_cost_per_fight << endl;
+	cout << "\t Pokemon dollar cost per fight: " << dollar_cost_per_fight << endl;
+	cout << "\t" << num_rivals_remaining << " rival(s) are remaining for this arena" << endl;
+	
+	
 
 }
 
+void BattleArena::RemoveOneRival()
+{
+	num_rivals_remaining --;
+}
+
+/*
 void BattleArena::RemoveOnePokemon(Rival* rival)
 {
 	if (rival->IsAlive() == true)
@@ -103,3 +117,5 @@ void BattleArena::RemoveOnePokemon(Rival* rival)
 		num_rivals_remaining -= 1;
 	}
 }
+*/
+

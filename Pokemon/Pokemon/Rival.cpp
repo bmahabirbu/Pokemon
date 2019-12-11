@@ -1,23 +1,23 @@
 #include "Rival.h"
-#include "BattleArena.h"
-#include <iostream>
-#include <string>
-using namespace std;
+#include "Point2D.h"
+#include  "GameObject.h"
+#include  "Building.h"
+#include  "BattleArena.h"
 
-
-Rival::Rival()
+Rival::Rival(BattleArena arena)
 {
 	health = 20;
 	physical_damage = 5;
 	magical_damage = 4;
 	defense = 15;
+	agility = 5;
 	is_in_arena = true;
-	//current_arena = &arena;
+	current_arena = &arena;
 	cout << "Rival default constructed" << endl;
 }
 
-Rival::Rival(string name, double speed, double hp, double phys_dmg, double
-	magic_dmg, double def, int id, Point2D in_loc) : GameObject(in_loc, id, 'R')
+Rival::Rival(BattleArena arena, string name, double speed, double hp, double phys_dmg, double
+	magic_dmg, double def, int id, Point2D in_loc) : GameObject(in_loc, id, 'R') 
 {
 	tag = name;
 	agility = speed;
@@ -26,12 +26,7 @@ Rival::Rival(string name, double speed, double hp, double phys_dmg, double
 	magical_damage = magic_dmg;
 	defense = def;
 	is_in_arena = true;
-	//current_arena = &arena
-
-//not sure if to define this or not
-	//id_num = id;
-	//location = in_loc;
-	//display_code = 'R';
+	current_arena = &arena;
 	cout << "Rival constructed" << endl;
 }
 
@@ -78,7 +73,7 @@ double Rival::get_health()
 
 bool Rival::Update()
 {
-	if (health > 0)
+	if (IsAlive() == true)
 	{
 		state = ALIVE_RIVAL;
 		ShowStatus();
@@ -100,6 +95,10 @@ void Rival::ShowStatus()
 	case ALIVE_RIVAL:
 		{
 		cout << "Rival " << get_name() << " is alive and well" << endl;
+		cout << "\t Health: " << get_health() << endl;
+		cout << "\t Physical damage: " << get_phys_dmg() << endl;
+		cout << "\t Magical damage: " << get_magic_dmg() << endl;
+		cout << "\t defense: " << get_defense() << endl;
 		}
 		break;
 		
@@ -112,6 +111,11 @@ void Rival::ShowStatus()
 	default :
 		cout << "Something went wrong" << endl;
 	}
+}
+
+bool Rival::ShouldBeVisible()
+{
+	return true;
 }
 
 bool Rival::IsAlive()

@@ -8,6 +8,7 @@ int main(void)
 {
 	srand(time(NULL)); //git test
 	Model model;
+	model.Update();
 	View view;
 	model.Display(view);
 
@@ -23,6 +24,22 @@ int main(void)
 				int ID, x, y;
 				cin >> ID >> x >> y;
 				DoMoveCommand(model, ID, Point2D(x, y));
+			}
+			break;
+
+			case 'b':
+			{
+				int ID1, ID2;
+				cin >> ID1 >> ID2;
+				DoBattleCommand(model, ID1, ID2);
+			}
+			break;
+
+			case 'a':
+			{
+				int ID1, ID2;
+				cin >> ID1 >> ID2;
+				DoMoveToArenaCommand(model, ID1, ID2);
 			}
 			break;
 

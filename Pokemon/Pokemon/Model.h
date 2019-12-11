@@ -12,12 +12,15 @@ public:
 	Pokemon* GetPokemonPtr(int id); // 3 functions
 	PokemonCenter* GetPokemonCenterPtr(int id);
 	PokemonGym* GetPokemonGymPtr(int id);
+	BattleArena* GetBattleArenaPtr(int id);
+	Rival* GetRivalPtr(int id);
 
 	bool Update(); //Update, View, Showstatus
 
 	void Display(View &view);
 
 	void ShowStatus();
+
 
 private:
 
@@ -31,4 +34,8 @@ private:
 	int num_centers;
 	PokemonGym* gym_ptrs[10];
 	int num_gym;
+	BattleArena* battle_arena_ptrs[10];
+	int num_arenas;
+	Rival* rival_ptrs[10];
+	int num_rivals;
 };

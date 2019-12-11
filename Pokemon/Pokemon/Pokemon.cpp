@@ -9,7 +9,11 @@ Pokemon::Pokemon()
 	destination = Point2D(0.0, 0.0);
 	stamina = 20;
 	is_in_gym = false;
-	is_in_center = true;
+	is_in_center = false; //fixed pa3
+	is_in_arena = false;
+	current_arena = nullptr;
+	current_center = nullptr;
+	current_gym = nullptr;
 	experience_points = 0;
 	pokemon_dollars = 0;
 	training_units_to_buy = 0;
@@ -27,7 +31,11 @@ Pokemon::Pokemon(char in_code)
 	speed = 5;
 	stamina = 20;
 	is_in_gym = false;
-	is_in_center = true;
+	is_in_center = false; //fixed pa3
+	is_in_arena = false;
+	current_arena = nullptr;
+	current_center = nullptr;
+	current_gym = nullptr;
 	experience_points = 0;
 	pokemon_dollars = 0;
 	training_units_to_buy = 0;
@@ -42,7 +50,11 @@ Pokemon::Pokemon(string in_name, int in_id, char in_code, unsigned int in_speed,
 {
 	stamina = 20;
 	is_in_gym = false;
-	is_in_center = true;
+	is_in_center = false; //fixed pa3
+	is_in_arena = false;
+	current_arena = nullptr;
+	current_center = nullptr;
+	current_gym = nullptr;
 	experience_points = 0;
 	pokemon_dollars = 0; 
 	training_units_to_buy = 0;
@@ -70,9 +82,7 @@ void Pokemon::ShowStatus()
 {
 	cout << name << " status: " << endl;
 	GameObject::ShowStatus();
-	cout << "\t pokedollars " << pokemon_dollars << endl;
-	cout << "\t experience " << experience_points << endl;
-	cout << "\t stamina " << stamina << endl;
+	
 
 	switch (state)//switch statement to print information about the value of the state
 	{
@@ -93,6 +103,10 @@ void Pokemon::ShowStatus()
 	case MOVING_TO_GYM:  cout << "\t heading to Pokemon Gym " << current_gym->GetId() << " at a speed of " << speed <<
 		" at each step of " << delta << endl;
 		break;
+		
+	case MOVING_TO_ARENA: cout << "\t heading to Battle Arena " << current_arena->GetId() << " at a speed of " << speed <<
+		" at each step of " << delta << endl; //new addition
+		break;
 
 	case IN_CENTER: cout << "\t inside Pokemon Center " << current_center->GetId() << endl;
 		break;
@@ -100,18 +114,32 @@ void Pokemon::ShowStatus()
 	case IN_GYM: cout << "\t inside Pokemon Gym " << current_gym->GetId() << endl;
 		break;
 	
-	case IN_ARENA: cout << "\t inside Battle Arena " << current_arena->GetId() << endl;
+	case IN_ARENA: cout << "\t inside Battle Arena " << current_arena->GetId() << endl; //new addition
+		break;
+		
+	case FAINTED: cout << "\t fainted" << endl; //new addition
+		break;
 
 	case TRAINING_IN_GYM: cout << "\t Training in Pokemon Gym " << current_gym->GetId() << endl;
 		break;
 
 	case RECOVERING_STAMINA: cout << "\t recovering stamina in Pokemon Center " << current_center->GetId() << endl;
 		break;
-	case BATTLE: cout << "\t In Battle with Rival" << endl;
+		
+	case BATTLE: cout << "\t In Battle with Rival" << endl; //new addition
 		break;
+		
 	default:
 		cout << "\t something went wrong with the state" << endl;
 	}
+	
+	cout << "\t pokedollars " << pokemon_dollars << endl;
+	cout << "\t experience " << experience_points << endl;
+	cout << "\t stamina " << stamina << endl;
+	cout << "\t Health: " << health << endl;
+	cout << "\t Physical damage: " << physical_damage << endl;
+	cout << "\t Magical damage: " << magical_damage << endl;
+	cout << "\t defense: " << defense << endl;
 }
 
 bool Pokemon::UpdateLocation()
@@ -380,10 +408,28 @@ bool Pokemon::ShouldBeVisible()
 
 bool Pokemon::Update()
 {
+	if(is_in_arena == false && current_arena != nullptr)
+	{
+		current_arena->RemoveOnePokemon();
+	}
+	
+	if (is_in_center == false && current_center != nullptr)
+	{
+		current_center->RemoveOnePokemon();
+	}
+	
+	if (is_in_gym == false && current_gym != nullptr)
+	{
+		current_gym->RemoveOnePokemon();
+	}
+	
 	switch (state)//switch statement to print information about the value of the state
 	{
 	case STOPPED:
 	{
+		is_in_center = false;
+		is_in_arena = false;
+		is_in_gym = false;
 		ShowStatus();
 		return false;
 	}
@@ -391,12 +437,18 @@ bool Pokemon::Update()
 
 	case EXHAUSTED:
 	{
+		is_in_center = false;
+		is_in_arena = false;
+		is_in_gym = false;
 		ShowStatus();
 		return false;
 	}
 
 	case MOVING:
 	{
+		is_in_center = false;
+		is_in_arena = false;
+		is_in_gym = false;
 		ShowStatus();
 		if (UpdateLocation() == true)
 		{
@@ -420,17 +472,29 @@ bool Pokemon::Update()
 		return false;
 	}
 		break;
-
+	case IN_ARENA:
+	{
+		ShowStatus();
+		return false;
+	}
+		break;
+		
 	case MOVING_TO_GYM: 
 	{
 		ShowStatus();
 		if (UpdateLocation() == true)
 		{
 			state = IN_GYM;
+			current_gym->AddOnePokemon();//fixed pa3
 			is_in_gym = true;
 			return true;
 		}
-		else return false;
+		else
+		{
+			is_in_center = false;
+			return false;
+		}
+			
 	}
 		break;
 
@@ -440,10 +504,15 @@ bool Pokemon::Update()
 		if (UpdateLocation() == true)
 		{
 			state = IN_CENTER;
+			current_center->AddOnePokemon(); //fixed from pa3
 			is_in_center = true;
 			return true;
 		}
-		else return false;
+		else
+		{
+			is_in_center = false;
+			return false;
+		}
 
 	}
 		break;
@@ -481,10 +550,15 @@ bool Pokemon::Update()
 		if (UpdateLocation() == true)
 		{
 			state = IN_ARENA;
+			current_arena->AddOnePokemon();
 			is_in_arena = true;
 			return true;
 		}
-		else return false;
+		else
+		{
+			is_in_arena = false;
+			return false;
+		}
 		}
 		break;
 
@@ -548,15 +622,19 @@ void Pokemon::ReadyBattle(Rival * in_target)
 	{
 		target = in_target;
 		state = BATTLE;
+		cout << name << " is ready to fight" << endl;
 	}
 	else
 	{
-		cout << "You are not ready to fight" << endl;
+		cout << name << " is not ready to fight" << endl;
 	}
 }
 
 bool Pokemon::StartBattle()
 {
+
+
+	
 	if (state == BATTLE)
 	{
 		while (health > 0 || target->get_health() > 0)
@@ -603,4 +681,3 @@ double GetRandomAmountOfPokemonDollars()
 {
 	return (rand() % (20000 - 0)) / 10000.0;
 }
-

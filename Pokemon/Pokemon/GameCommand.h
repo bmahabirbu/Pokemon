@@ -20,3 +20,9 @@ void DoRecoverInCenterCommand(Model & model, int pokemon_id, unsigned int
 void DoGoCommand(Model &model, View &view);
 
 void DoRunCommand(Model &model, View &view);
+
+void DoMoveToArenaCommand(Model & model, int pokemon_id, int arena_id);
+
+void DoBattleCommand(Model& model, int pokemon_id, int rival_id);
+
+//void CreateObjectCommand(Model& model, View &view)
