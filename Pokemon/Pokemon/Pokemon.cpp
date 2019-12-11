@@ -544,19 +544,19 @@ bool Pokemon::Update()
 		
 	case MOVING_TO_ARENA:
 		{
-		ShowStatus();
-		if (UpdateLocation() == true)
-		{
-			state = IN_ARENA;
-			current_arena->AddOnePokemon();
-			is_in_arena = true;
-			return true;
-		}
-		else
-		{
-			is_in_arena = false;
-			return false;
-		}
+			ShowStatus();
+			if (UpdateLocation() == true)
+			{
+				state = IN_ARENA;
+				current_arena->AddOnePokemon();
+				is_in_arena = true;
+				return true;
+			}
+			else
+			{
+				is_in_arena = false;
+				return false;
+			}
 		}
 		break;
 
@@ -570,17 +570,29 @@ bool Pokemon::Update()
 				health = store_health;
 				state = IN_ARENA;
 				target->IsAlive();
+				cout << name << " Won the battle" << endl;
 				return true;
+				
 			}
 			else
 			{
 				state = FAINTED;
 				target->IsAlive();
+				cout << target->get_name() << " Won the battle " << endl;
 				return true;
 			}
 		}
+		
 		break;
-
+	case FAINTED:
+		{
+		is_in_center = false;
+		is_in_arena = false;
+		is_in_gym = false;
+		ShowStatus();
+		return false;
+		}
+		break;
 		
 	default:
 		cout << "something went wrong with the state machine" << endl;
@@ -607,10 +619,12 @@ void Pokemon::TakeHit(double physical_damage, double magical_damage, double defe
 	if (phy_or_mag == 1)
 	{
 		attack = physical_damage;
+		cout << "took physical attack" << endl;
 	}
 	else
 	{
 		attack = magical_damage;
+		cout << "took Magical attack" << endl;
 	}
 
 	health -= (100.0 - defense) / 100 * attack;
@@ -626,6 +640,7 @@ void Pokemon::ReadyBattle(Rival * in_target)
 	}
 	else
 	{
+		state = IN_ARENA;
 		cout << name << " is not ready to fight" << endl;
 	}
 }
@@ -633,25 +648,24 @@ void Pokemon::ReadyBattle(Rival * in_target)
 bool Pokemon::StartBattle()
 {
 
-
-	
 	if (state == BATTLE)
 	{
-		while (health > 0 || target->get_health() > 0)
+		while (health > 0 && target->get_health() > 0)
 		{
 			TakeHit(target->get_phys_dmg(), target->get_phys_dmg(), defense);
 			cout << name << " took damage" << endl;
 			target->TakeHit(physical_damage, magical_damage, target->get_defense());
 			cout << "Rival took damage" << endl;
 		}
-		if (health == 0)
+		
+		if (health <= 0 && target->get_health() >= 0)
 		{
-			cout << name << " Lost the battle" << endl;
+			//cout << name << " Lost the battle" << endl;
 			return false;
 		}
-		if (target->get_health() == 0)
+		if (target->get_health() <= 0 && health >= 0)
 		{
-			cout << "Rival lost the battle" << endl;
+			//cout << "Rival lost the battle" << endl;
 			return true;
 		}
 	}

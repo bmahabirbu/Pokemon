@@ -37,10 +37,12 @@ void Rival::TakeHit(double physical_damage, double magical_damage, double defens
 	if (phy_or_mag == 1)
 	{
 		attack = physical_damage;
+		cout << "Rival took physical attack" << endl;
 	}
 	else
 	{
 		attack = magical_damage;
+		cout << "Rival took magical attack" << endl;
 	}
 
 	health -= (100.0 - defense) / 100 * attack;
@@ -106,6 +108,7 @@ void Rival::ShowStatus()
 	case FAINTED_RIVAL:
 		{
 		cout << "Rival " << get_name() << " has fainted" << endl;
+		cout << "\t Health: " << get_health() << endl;
 		}
 		break;
 

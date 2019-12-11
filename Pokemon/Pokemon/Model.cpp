@@ -19,8 +19,8 @@ Model::Model()
 	BattleArena* battle_arena = new BattleArena(5, 3, 4, 1, Point2D(15, 12));
 
 	Rival* Rival1 = new Rival(*battle_arena,"Bubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
-	Rival* Rival2 = new Rival(*battle_arena,"kubba", 5, 10, 5, 4, 15, 1, Point2D(15, 12));
-	Rival* Rival3 = new Rival(*battle_arena,"rubba", 5, 10, 5, 4, 15, 1, Point2D(15, 12));
+	Rival* Rival2 = new Rival(*battle_arena,"kubba", 5, 10, 5, 4, 15, 2, Point2D(15, 12));
+	Rival* Rival3 = new Rival(*battle_arena,"rubba", 5, 10, 5, 4, 15, 3, Point2D(15, 12));
 
 	//add rival and Battle arena
 
