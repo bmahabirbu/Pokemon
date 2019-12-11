@@ -25,7 +25,7 @@ BattleArena::BattleArena(unsigned int max_rivals, unsigned int stamina_cost, dou
 	pokemon_count = 0;
 	location = in_loc;
 	max_num_rivals = max_rivals;
-	num_rivals_remaining = max_rivals;
+	num_rivals_remaining = 3;
 	stamina_cost_per_fight = stamina_cost;
 	dollar_cost_per_fight = dollar_cost;
 	state = RIVALS_AVAILABLE;
@@ -98,7 +98,7 @@ void BattleArena::ShowStatus()
 	cout << "\t Max number of rivals: " << max_num_rivals << endl;
 	cout << "\t Stamina cost per fight: " << stamina_cost_per_fight << endl;
 	cout << "\t Pokemon dollar cost per fight: " << dollar_cost_per_fight << endl;
-	cout << "\t" << num_rivals_remaining << " rival(s) are remaining for this arena" << endl;
+	cout << "\t" <<  GetNumRivalsRemaining() << " rival(s) are remaining for this arena" << endl;
 	
 	
 
@@ -106,7 +106,7 @@ void BattleArena::ShowStatus()
 
 void BattleArena::RemoveOneRival()
 {
-	num_rivals_remaining --;
+	num_rivals_remaining -= 1;;
 }
 
 /*

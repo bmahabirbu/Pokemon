@@ -76,8 +76,6 @@ Pokemon::Pokemon(string in_name, int in_id, char in_code, unsigned int in_speed,
 	is_in_arena = false;
 }
 
-
-
 void Pokemon::ShowStatus()
 {
 	cout << name << " status: " << endl;
@@ -572,11 +570,13 @@ bool Pokemon::Update()
 				health = store_health;
 				state = IN_ARENA;
 				target->IsAlive();
+				return true;
 			}
 			else
 			{
 				state = FAINTED;
 				target->IsAlive();
+				return true;
 			}
 		}
 		break;

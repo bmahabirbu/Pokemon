@@ -82,6 +82,7 @@ bool Rival::Update()
 	else
 	{
 		state = FAINTED_RIVAL;
+		current_arena->RemoveOneRival();
 		ShowStatus();
 		return true;
 	}

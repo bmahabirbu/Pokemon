@@ -55,7 +55,7 @@ private:
 	//maximun number of rivals the battle arena can hold set to 3
 
 	unsigned int num_rivals_remaining;
-	//The number of rivals currently in this Battle Arena Initial value should be set to num_rivals
+	//The number of rivals currently in this Battle Arena Initial value should be set to max_num_rivals
 
 	double dollar_cost_per_fight;
 	//The per fight cost in Pokemon Dollars

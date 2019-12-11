@@ -1,6 +1,9 @@
 #pragma once
 #include "Pokemon.h"
 #include "View.h"
+#include <list> 
+#include <iterator>
+using namespace std;
 
 class Model
 {
@@ -26,16 +29,25 @@ private:
 
 	//Model(const Model &old_object); //copy contructor
 	int time; //variables
-	GameObject* object_ptrs[10];
-	int num_objects;
-	Pokemon* pokemon_ptrs[10];
-	int num_pokemon;
-	PokemonCenter* centers_ptrs[10];
-	int num_centers;
-	PokemonGym* gym_ptrs[10];
-	int num_gym;
-	BattleArena* battle_arena_ptrs[10];
-	int num_arenas;
-	Rival* rival_ptrs[10];
-	int num_rivals;
+	
+	list <GameObject*> object_ptrs;
+	//int num_objects;
+	
+	list <Pokemon*> pokemon_ptrs;
+	//int num_pokemon;
+	
+	list <PokemonCenter*> centers_ptrs;
+		//int num_centers;
+
+	list <PokemonGym*> gym_ptrs;
+	//int num_gym;
+	
+	list <BattleArena*> battle_arena_ptrs;
+	//int num_arenas;
+	
+	list <Rival*> rival_ptrs;
+	//int num_rivals;
+
+	list <GameObject*> active_ptrs;
+	
 };

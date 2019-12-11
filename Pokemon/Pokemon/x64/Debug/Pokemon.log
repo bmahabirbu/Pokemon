@@ -1,4 +1,2 @@
-﻿  Pokemon.cpp
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\pokemon.cpp(589): warning C4715: 'Pokemon::Update': not all control paths return a value
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\pokemon.cpp(658): warning C4715: 'Pokemon::StartBattle': not all control paths return a value
-  Pokemon.vcxproj -> C:\Users\bmahabir\source\repos\bmahabirbu\Pokemon\Pokemon\Pokemon\x64\Debug\Pokemon.exe
+﻿  BattleArena.cpp
+LINK : fatal error LNK1168: cannot open C:\Users\bmahabir\source\repos\bmahabirbu\Pokemon\Pokemon\Pokemon\x64\Debug\Pokemon.exe for writing
