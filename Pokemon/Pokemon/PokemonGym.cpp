@@ -92,7 +92,7 @@ bool PokemonGym::Update()
 	}
 	else
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 }

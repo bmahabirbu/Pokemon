@@ -19,8 +19,12 @@ public:
 	GameObject(char in_code);
 	GameObject(Point2D in_loc, int in_id, char in_code);
 	Point2D GetLocation();
+
 	int GetId();
+
 	char GetState();
+
+	char GetDisplayCode();
 
 	virtual void ShowStatus(); //declares showstatus to be virtual
 

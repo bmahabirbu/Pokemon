@@ -82,13 +82,13 @@ bool Rival::Update()
 {
 	if (IsAlive() == false && display_code == 'R')
 	{
-		ShowStatus();
+		//ShowStatus();
 		display_code = 'r';
 		return true;
 	}
 	else
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 }

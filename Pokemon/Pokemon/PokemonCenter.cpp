@@ -92,7 +92,7 @@ bool PokemonCenter::Update()
 	}
 	if (num_stamina_points_remaining > 0 || display_code == 'c')
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 }

@@ -77,7 +77,7 @@ bool BattleArena::Update()
 	}
 	else
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 }

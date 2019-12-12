@@ -429,7 +429,7 @@ bool Pokemon::Update()
 		is_in_center = false;
 		is_in_arena = false;
 		is_in_gym = false;
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 		break;
@@ -439,7 +439,7 @@ bool Pokemon::Update()
 		is_in_center = false;
 		is_in_arena = false;
 		is_in_gym = false;
-		ShowStatus();
+		//ShowStatus();
 		return true;
 	}
 
@@ -448,7 +448,7 @@ bool Pokemon::Update()
 		is_in_center = false;
 		is_in_arena = false;
 		is_in_gym = false;
-		ShowStatus();
+		//ShowStatus();
 		if (UpdateLocation() == true)
 		{
 			state = STOPPED;
@@ -461,27 +461,27 @@ bool Pokemon::Update()
 
 	case IN_GYM:
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 		break;
 
 	case IN_CENTER: 
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 		break;
 	case IN_ARENA:
 	{
-		ShowStatus();
+		//ShowStatus();
 		return false;
 	}
 		break;
 		
 	case MOVING_TO_GYM: 
 	{
-		ShowStatus();
+		//ShowStatus();
 		if (UpdateLocation() == true)
 		{
 			state = IN_GYM;
@@ -501,7 +501,7 @@ bool Pokemon::Update()
 
 	case MOVING_TO_CENTER: 
 	{
-		ShowStatus();
+		//ShowStatus();
 		if (UpdateLocation() == true)
 		{
 			state = IN_CENTER;
@@ -520,7 +520,7 @@ bool Pokemon::Update()
 
 	case TRAINING_IN_GYM: 
 	{
-		ShowStatus();
+		//ShowStatus();
 		stamina -= current_gym->GetStaminaCost(training_units_to_buy); //reduce stamina from stamina used for training units
 		pokemon_dollars -= current_gym->GetDollarCost(training_units_to_buy); //reduce money from training units gotten
 		experience_points += current_gym->TrainPokemon(training_units_to_buy); // gain exp from training units
@@ -533,7 +533,7 @@ bool Pokemon::Update()
 
 	case RECOVERING_STAMINA: 
 	{
-		ShowStatus();
+		//ShowStatus();
 		stamina += current_center->DistributeStamina(stamina_points_to_buy);
 		pokemon_dollars -= current_center->GetDollarCost(stamina_points_to_buy);
 		cout << "** " << name << " recovered " << current_center->DistributeStamina(stamina_points_to_buy) << " stamina point(s)!**" << endl;
@@ -547,7 +547,7 @@ bool Pokemon::Update()
 		
 	case MOVING_TO_ARENA:
 		{
-			ShowStatus();
+			//ShowStatus();
 			if (UpdateLocation() == true)
 			{
 				state = IN_ARENA;
@@ -565,7 +565,7 @@ bool Pokemon::Update()
 
 	case BATTLE:
 		{
-			ShowStatus();
+			//ShowStatus();
 			stamina -= current_arena->GetStaminaCost();
 			pokemon_dollars -= current_arena->GetDollarCost();
 			if (StartBattle() == true)
@@ -593,7 +593,7 @@ bool Pokemon::Update()
 		is_in_center = false;
 		is_in_arena = false;
 		is_in_gym = false;
-		ShowStatus();
+		//ShowStatus();
 		return false;
 		}
 		break;

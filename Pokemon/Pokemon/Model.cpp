@@ -19,7 +19,7 @@ Model::Model()
 	//new objects rival and battlearena
 	BattleArena* battle_arena = new BattleArena(5, 3, 4, 1, Point2D(15, 12));
 
-	Rival* Rival1 = new Rival(*battle_arena,"BigBubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
+	Rival* Rival1 = new Rival(*battle_arena,"BigBubba", 5, 60, 5, 4, 15, 1, Point2D(15, 12));
 	Rival* Rival2 = new Rival(*battle_arena,"Gun", 5, 10, 5, 4, 15, 2, Point2D(15, 12));
 	Rival* Rival3 = new Rival(*battle_arena,"Monish", 5, 10, 5, 4, 15, 3, Point2D(15, 12));
 	
@@ -152,10 +152,15 @@ PokemonGym* Model::GetPokemonGymPtr(int id)
 	}
 }
 
-bool updatetrue = false;
+
 
 bool Model::Update()
 {
+	bool status_to_return = false;
+	int pokemon_exhausted_counter = 0;
+	int pokemon_fainted_counter = 0;
+	int arenas_beaten_counter = 0;
+
 	time = time + 1;
 	cout << "time " << time << endl;
 	
@@ -163,12 +168,12 @@ bool Model::Update()
 	{
 		if ((*it)->Update() == true)
 		{
-			updatetrue = true;;
+			status_to_return = true;
 		}
 		
 		if ((*it)->GetState() == 1 || (*it)->GetState() == 12) //iterate and update, also check if update is true	//and return true
 		{
-
+			//getting an error where i cant delete the last iterator cant fix it
 			//if ((it) == active_ptrs.end())
 			//{
 				//active_ptrs.pop_back();
@@ -178,6 +183,7 @@ bool Model::Update()
 			
 			it = active_ptrs.erase(it);	
 			cout << "removed dead object" << endl;
+			
 		}
 		
 	
@@ -191,6 +197,7 @@ bool Model::Update()
 		//}
 	//}
 
+	/*
 	unsigned int temp2 = 0;
 	
 	for (auto it = gym_ptrs.begin(); it != gym_ptrs.end(); ++it)
@@ -207,28 +214,69 @@ bool Model::Update()
 		}
 		
 	}
+	*/
 
-	unsigned int temp = 0;
-	
+	//unsigned int temp = 0;
+	/*
 	for (auto it = pokemon_ptrs.begin(); it != pokemon_ptrs.end(); ++it)
 	{
-		if((*it)->isExhausted() == true)
+		if ((*it)->isExhausted() == true)
 		{
 			temp += 1;
 		}
-		
-		if( temp == pokemon_ptrs.size())
+
+		if (temp == pokemon_ptrs.size())
 		{
 			cout << "GAME OVER: You lose! All of your Pokemon are tired!" << endl;
 			exit(0);
 		}
+	}
+	*/
+		list<GameObject*>::iterator iterator1;
+
+		for (iterator1 = object_ptrs.begin(); iterator1 != object_ptrs.end(); iterator1++)
+		{
+			if ((*iterator1)->GetDisplayCode() == 'P' || (*iterator1)->GetDisplayCode() == 'p')
+			{
+				if ((*iterator1)->GetState() == EXHAUSTED)
+				{
+					pokemon_exhausted_counter += 1;
+				}
+				if ((*iterator1)->GetState() == FAINTED)
+				{
+					pokemon_fainted_counter += 1;
+				}
+			}
+
+			if ((*iterator1)->GetDisplayCode() == 'A' || (*iterator1)->GetDisplayCode()  == 'a')
+			{
+				if ((*iterator1)->GetState() == NO_RIVALS_AVAILABLE)
+				{
+					arenas_beaten_counter += 1;
+				}
+			}
+		
+
+
+		if (arenas_beaten_counter == battle_arena_ptrs.size())
+		{
+			cout << "GAME OVER: You win! All Battle Arenas Beaten!" << endl;
+			exit(EXIT_SUCCESS);
+		}
+		else if ((pokemon_exhausted_counter + pokemon_fainted_counter) == pokemon_ptrs.size())
+		{
+			cout << "GAME OVER: You lose! All of your Pokemon are either tired or fainted!" << endl;
+			exit(EXIT_FAILURE);
+		}
 		
 	}
-	return updatetrue;
+
+	return status_to_return;
 }
 
 void Model::Display(View &view)
 {
+	ShowStatus();
 	view.Clear();
 
 	for (auto it = object_ptrs.begin(); it != object_ptrs.end(); ++it)
@@ -327,7 +375,7 @@ void Model::ObjectMake(char type, int id, double x, double y)
 			}
 
 			// code only works for 1 battle arena
-			Rival* rnew = new Rival(*battle_arena_ptrs.front(), "BigBubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
+			Rival* rnew = new Rival(*battle_arena_ptrs.front(), "New Rival", 5, 20, 5, 4, 15, 1, Point2D(15, 12));
 			(battle_arena_ptrs.front())->AddOneRival();
 			object_ptrs.push_back(rnew);
 			active_ptrs.push_back(rnew);
