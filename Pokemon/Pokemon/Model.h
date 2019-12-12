@@ -24,6 +24,7 @@ public:
 
 	void ShowStatus();
 
+	void ObjectMake(char, int, double, double);
 
 private:
 

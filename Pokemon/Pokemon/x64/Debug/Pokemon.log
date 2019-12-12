@@ -1,8 +1,2 @@
-﻿  Model.cpp
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(116): warning C4715: 'Model::GetBattleArenaPtr': not all control paths return a value
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(125): warning C4715: 'Model::GetRivalPtr': not all control paths return a value
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(143): warning C4715: 'Model::GetPokemonCenterPtr': not all control paths return a value
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(134): warning C4715: 'Model::GetPokemonPtr': not all control paths return a value
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(152): warning C4715: 'Model::GetPokemonGymPtr': not all control paths return a value
-c:\users\bmahabir\source\repos\bmahabirbu\pokemon\pokemon\pokemon\model.cpp(224): warning C4715: 'Model::Update': not all control paths return a value
-  Pokemon.vcxproj -> C:\Users\bmahabir\source\repos\bmahabirbu\Pokemon\Pokemon\Pokemon\x64\Debug\Pokemon.exe
+﻿  main.cpp
+  Pokemon.vcxproj -> C:\Users\brian\source\repos\bmahabirbu\Pokemon\Pokemon\Pokemon\x64\Debug\Pokemon.exe

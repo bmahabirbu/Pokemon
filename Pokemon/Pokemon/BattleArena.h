@@ -47,6 +47,8 @@ public:
 	void ShowStatus();
 
 	void RemoveOneRival();
+
+	void AddOneRival();
 	
 
 	

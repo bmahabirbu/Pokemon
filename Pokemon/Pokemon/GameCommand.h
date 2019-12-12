@@ -25,4 +25,6 @@ void DoMoveToArenaCommand(Model & model, int pokemon_id, int arena_id);
 
 void DoBattleCommand(Model& model, int pokemon_id, int rival_id);
 
+
+
 //void CreateObjectCommand(Model& model, View &view)

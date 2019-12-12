@@ -117,6 +117,7 @@ void DoGoCommand(Model & model, View & view)
 {
 	cout << "Advancing to next event" << endl; 
 	model.Update();
+	//model.ShowStatus();
 	model.Display(view);
 }
 

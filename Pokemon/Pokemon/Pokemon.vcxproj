@@ -122,6 +122,7 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="GameCommand.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Input_Handling.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="Pokemon.h" />

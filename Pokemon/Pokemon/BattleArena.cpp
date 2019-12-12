@@ -109,6 +109,11 @@ void BattleArena::RemoveOneRival()
 	num_rivals_remaining -= 1;;
 }
 
+void BattleArena::AddOneRival()
+{
+	num_rivals_remaining++;
+}
+
 /*
 void BattleArena::RemoveOnePokemon(Rival* rival)
 {

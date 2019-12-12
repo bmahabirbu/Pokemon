@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <list> 
 #include <iterator>
+#include "Input_Handling.h"
 using namespace std;
 
 Model::Model()
@@ -18,10 +19,10 @@ Model::Model()
 	//new objects rival and battlearena
 	BattleArena* battle_arena = new BattleArena(5, 3, 4, 1, Point2D(15, 12));
 
-	Rival* Rival1 = new Rival(*battle_arena,"Bubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
-	Rival* Rival2 = new Rival(*battle_arena,"kubba", 5, 10, 5, 4, 15, 2, Point2D(15, 12));
-	Rival* Rival3 = new Rival(*battle_arena,"rubba", 5, 10, 5, 4, 15, 3, Point2D(15, 12));
-
+	Rival* Rival1 = new Rival(*battle_arena,"BigBubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
+	Rival* Rival2 = new Rival(*battle_arena,"Gun", 5, 10, 5, 4, 15, 2, Point2D(15, 12));
+	Rival* Rival3 = new Rival(*battle_arena,"Monish", 5, 10, 5, 4, 15, 3, Point2D(15, 12));
+	
 	//add rival and Battle arena
 
 /*
@@ -89,7 +90,7 @@ Model::Model()
 	rival_ptrs.push_back(Rival3);
 
 	active_ptrs = object_ptrs;
-	cout << "Model default contructed" << endl;
+	cout << "Model default constructed" << endl;
 
 }
 
@@ -151,28 +152,31 @@ PokemonGym* Model::GetPokemonGymPtr(int id)
 	}
 }
 
+bool updatetrue = false;
+
 bool Model::Update()
 {
 	time = time + 1;
 	cout << "time " << time << endl;
-	for (auto it = active_ptrs.begin(); it != active_ptrs.end(); ++it)
+	
+	for (auto it = active_ptrs.begin(); it != active_ptrs.end(); it++)
 	{
-		(*it)->Update();
+		if ((*it)->Update() == true)
+		{
+			updatetrue = true;;
+		}
 		
 		if ((*it)->GetState() == 1 || (*it)->GetState() == 12) //iterate and update, also check if update is true	//and return true
 		{
 
-			if ((--it) == active_ptrs.end())
-			{
+			//if ((it) == active_ptrs.end())
+			//{
 				//active_ptrs.pop_back();
 				//cout << "yay" << endl;
-				break;
-			}
+				//break;
+			//}
 			
-			it = active_ptrs.erase(it);
-			
-			
-				
+			it = active_ptrs.erase(it);	
 			cout << "removed dead object" << endl;
 		}
 		
@@ -220,7 +224,7 @@ bool Model::Update()
 		}
 		
 	}
-		
+	return updatetrue;
 }
 
 void Model::Display(View &view)
@@ -236,8 +240,8 @@ void Model::Display(View &view)
 
 		view.Plot((*it)); //plot all objects from array of pointers
 	}
-
 	view.Draw();
+	//ShowStatus(); fix later
 }
 
 
@@ -247,6 +251,89 @@ void Model::ShowStatus()
 	{
 		(*it)->ShowStatus();
 	}
+}
+
+void Model::ObjectMake(char type, int id, double x, double y)
+{
+
+		cout << "objects with default values" << endl;
+
+		if (type == 'g' || type == 'G')
+		{
+			if (gym_ptrs.size() >= id)
+			{
+				throw Invalid_Input("Gym with this ID num already exists, even if not active");
+			}
+
+			if (id > 9 || id <= 0)
+			{
+				throw Invalid_Input("Do not enter an ID greater than 9 or 0/below");
+			}
+
+			PokemonGym* g1 = new PokemonGym(10, 1, 1.5, 3.3, id, Point2D(x, y));
+			object_ptrs.push_back(g1);
+			active_ptrs.push_back(g1);
+			gym_ptrs.push_back(g1);
+		}
+		else if (type == 'c' || type == 'C')
+		{
+			if (centers_ptrs.size() >= id)
+			{
+				throw Invalid_Input("Center with this ID num already exists, even if not active");
+			}
+
+			if (id > 9 || id <= 0)
+			{
+				throw Invalid_Input("Do not enter an ID greater than 9 or 0/below");
+			}
+
+			PokemonCenter* c1 = new PokemonCenter(id, 2, 100, Point2D(x, y));
+			object_ptrs.push_back(c1);
+			active_ptrs.push_back(c1);
+			centers_ptrs.push_back(c1);
+		}
+
+		else if (type == 'p' || type == 'p')
+		{
+			if (pokemon_ptrs.size() >= id)
+			{
+				throw Invalid_Input("Pokemon with this ID num already exists, even if not active");
+			}
+
+			if (id > 9 || id <= 0)
+			{
+				throw Invalid_Input("Do not enter an ID greater than 9 or 0/below");
+			}
+
+			Pokemon* p1 = new Pokemon("Default Pokemon", id, 'P', 2, Point2D(x, y));
+			object_ptrs.push_back(p1);
+			active_ptrs.push_back(p1);
+			pokemon_ptrs.push_back(p1);
+
+		}
+
+		else if (type == 'r' || type == 'R')
+		{
+			cout << "This rival will merely be put into the Battle Arena, not to the specified location" << endl;
+
+			if (id < rival_ptrs.size())
+			{
+				throw Invalid_Input("Rival with ID num already exists, even if not active");
+			}
+
+			if (id > 9 || id <= 0)
+			{
+				throw Invalid_Input("Do not enter an ID greater than 9 or 0/below");
+			}
+
+			// code only works for 1 battle arena
+			Rival* rnew = new Rival(*battle_arena_ptrs.front(), "BigBubba", 5, 40, 5, 4, 15, 1, Point2D(15, 12));
+			(battle_arena_ptrs.front())->AddOneRival();
+			object_ptrs.push_back(rnew);
+			active_ptrs.push_back(rnew);
+			rival_ptrs.push_back(rnew);
+		}
+
 }
 
 
